@@ -2,6 +2,8 @@
 
 Unofficial [Chekin](https://chekin.com) CLI tool for your agents.
 
+**Documentation: https://wilfred93.github.io/chekin-cli/**
+
 > **Unofficial.** Chekin's partner API (`api/v3/reservations/`) needs partner
 > access, so this CLI uses the same API as the web dashboard
 > (`dashboard.chekin.com` → `https://a.chekin.io`). Those endpoints are
@@ -119,4 +121,17 @@ dashboard does.
 
 ```sh
 go test ./...
+```
+
+The documentation site is in [`docs/`](docs/) ([Astro Starlight](https://starlight.astro.build)):
+
+```sh
+cd docs && npm install && npm run dev
+```
+
+Its [command reference](docs/src/content/docs/reference/commands.md) is generated from the CLI's help
+text. After changing a command or flag, regenerate it (`go test` fails until you do):
+
+```sh
+go test ./internal/cli -run TestCommandReference -update
 ```

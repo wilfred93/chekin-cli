@@ -1,0 +1,46 @@
+---
+title: chekin-cli
+description: Unofficial command line tool for Chekin. Log in, list bookings and get guest links from your terminal, scripts or AI agents.
+---
+
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+`chekin` lets you read your [Chekin](https://chekin.com) bookings from the terminal: filter them by date,
+status, property or guest, get each booking's guest check-in, payment and upsell links, and print it all
+as a table or as JSON for scripts and AI agents.
+
+:::caution[Unofficial]
+This project isn't made or supported by Chekin. Chekin's partner API (`api/v3/reservations/`) needs
+partner access, so `chekin` uses the same API as the web dashboard (`dashboard.chekin.com` →
+`https://a.chekin.io`). Those endpoints are undocumented and may change or break without notice.
+:::
+
+## Quick example
+
+```sh
+go install github.com/wilfred93/chekin-cli/cmd/chekin@latest
+chekin login --email you@example.com      # prompts for the password
+chekin bookings list --upcoming --limit 3
+```
+
+```text
+ID        CHECK-IN    CHECK-OUT   PROPERTY       GUEST         GUESTS  STATUS      SOURCE
+a1b2c3d4  2026-11-07  2026-11-14  Sea view flat  -             0/2     INCOMPLETE  Airbnb
+e5f6a7b8  2026-11-09  2026-11-12  Old town loft  Maria Garcia  2/2     COMPLETE    Booking.com
+c9d0e1f2  2026-11-15  2026-11-18  Sea view flat  John Smith    1/3     INCOMPLETE  Direct booking
+```
+
+Then get one booking's guest links:
+
+```sh
+chekin bookings get a1b2c3d4
+```
+
+## Next steps
+
+<CardGrid>
+  <LinkCard title="Install and update" href="/chekin-cli/install/" description="go install, building from source, checking the version." />
+  <LinkCard title="Log in" href="/chekin-cli/log-in/" description="Email and password, or a token pasted from the dashboard." />
+  <LinkCard title="List bookings" href="/chekin-cli/bookings/" description="Dates, status, property, guest and source filters." />
+  <LinkCard title="Scripts and AI agents" href="/chekin-cli/agents/" description="Non-interactive login, JSON output and exit codes." />
+</CardGrid>
