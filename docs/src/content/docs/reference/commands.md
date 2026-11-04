@@ -24,6 +24,7 @@ Usage:
   chekin whoami                                     show the logged-in account
   chekin bookings list [flags]                      list bookings (alias: reservations)
   chekin bookings get ID [-o json]                  show one booking, with its guest links
+  chekin update [--check] [--yes]                   update to the latest release
   chekin version
 
 Run "chekin <command> --help" for a command's flags.
@@ -119,6 +120,18 @@ Flags:
         output format: table or json (default "table")
 ```
 
+## `chekin update`
+
+```text
+Usage: chekin update [--check] [--yes]
+
+Flags:
+  -check
+        only report whether a newer release exists
+  -yes
+        update without asking
+```
+
 ## `chekin version`
 
-Prints `chekin` and the version. `--version` does the same. Builds that don't set a version at build time (including `go install` and `go build`) print `chekin dev`.
+Prints `chekin` and the version. `--version` does the same. Release builds print their version, as does a copy installed with `go install ...@v1.2.3`. A build from a checkout prints the Go pseudo-version of its commit, or `dev`.

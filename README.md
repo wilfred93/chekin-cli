@@ -12,9 +12,18 @@ Unofficial [Chekin](https://chekin.com) CLI tool for your agents.
 ## Install
 
 ```sh
-go install github.com/wilfred93/chekin-cli/cmd/chekin@latest
-# or, from a checkout:
-go build -o bin/chekin ./cmd/chekin
+curl -fsSL https://wilfred93.github.io/chekin-cli/install.sh | sh   # macOS, Linux
+go install github.com/wilfred93/chekin-cli/cmd/chekin@latest       # or, with Go
+```
+
+Windows builds are on the [releases page](https://github.com/wilfred93/chekin-cli/releases).
+See [Install and update](https://wilfred93.github.io/chekin-cli/install/) for the details.
+
+## Update
+
+```sh
+chekin update --check   # is there a newer release?
+chekin update           # download, verify the checksum, replace the binary
 ```
 
 ## Log in
@@ -122,6 +131,10 @@ dashboard does.
 ```sh
 go test ./...
 ```
+
+To release, push a version tag (`git tag v0.2.0 && git push origin v0.2.0`). The
+[release workflow](.github/workflows/release.yml) builds the binaries with
+[`scripts/build-release.sh`](scripts/build-release.sh) and publishes them.
 
 The documentation site is in [`docs/`](docs/) ([Astro Starlight](https://starlight.astro.build)):
 

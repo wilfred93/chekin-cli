@@ -18,7 +18,7 @@ partner access, so `chekin` uses the same API as the web dashboard (`dashboard.c
 ## Quick example
 
 ```sh
-go install github.com/wilfred93/chekin-cli/cmd/chekin@latest
+curl -fsSL https://wilfred93.github.io/chekin-cli/install.sh | sh
 chekin login --email you@example.com      # prompts for the password
 chekin bookings list --upcoming --limit 3
 ```
@@ -39,7 +39,7 @@ chekin bookings get a1b2c3d4
 ## Next steps
 
 <CardGrid>
-  <LinkCard title="Install and update" href="/chekin-cli/install/" description="go install, building from source, checking the version." />
+  <LinkCard title="Install and update" href="/chekin-cli/install/" description="One-line installer, Windows, go install, chekin update and uninstalling." />
   <LinkCard title="Log in" href="/chekin-cli/log-in/" description="Email and password, or a token pasted from the dashboard." />
   <LinkCard title="List bookings" href="/chekin-cli/bookings/" description="Dates, status, property, guest and source filters." />
   <LinkCard title="Scripts and AI agents" href="/chekin-cli/agents/" description="Non-interactive login, JSON output and exit codes." />

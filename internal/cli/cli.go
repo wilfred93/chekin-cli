@@ -14,9 +14,6 @@ import (
 	"github.com/wilfred93/chekin-cli/internal/config"
 )
 
-// Version is set at build time with -ldflags "-X .../internal/cli.Version=...".
-var Version = "dev"
-
 const usage = `chekin: unofficial command line tool for Chekin (chekin.com)
 
 Usage:
@@ -26,6 +23,7 @@ Usage:
   chekin whoami                                     show the logged-in account
   chekin bookings list [flags]                      list bookings (alias: reservations)
   chekin bookings get ID [-o json]                  show one booking, with its guest links
+  chekin update [--check] [--yes]                   update to the latest release
   chekin version
 
 Run "chekin <command> --help" for a command's flags.
@@ -42,6 +40,9 @@ type App struct {
 	Stdin  io.Reader
 	Stdout io.Writer
 	Stderr io.Writer
+
+	releasesURL string // GitHub releases page; tests point it at a fake server
+	exePath     string // binary that `chekin update` replaces; tests use a temp file
 }
 
 // errUsage marks errors caused by bad arguments (exit code 2).
@@ -77,6 +78,8 @@ func (a *App) run(ctx context.Context, args []string) error {
 	case "version", "--version":
 		fmt.Fprintln(a.Stdout, "chekin", Version)
 		return nil
+	case "update":
+		return a.update(ctx, args[1:])
 	case "login":
 		return a.login(ctx, args[1:])
 	case "logout":

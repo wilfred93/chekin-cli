@@ -1,12 +1,43 @@
 ---
 title: Install and update
-description: Install chekin with go install or build it from source, update it, and check which version you have.
+description: Install chekin with the one-line installer, on Windows, or with go install; update it with chekin update; uninstall it.
 ---
 
-`chekin` is a single Go binary with no runtime dependencies. You need [Go](https://go.dev/dl/) 1.26 or newer
-to install it.
+`chekin` is a single binary with no runtime dependencies. Releases are built for macOS, Linux and Windows,
+on amd64 and arm64.
 
-## Install with `go install`
+## macOS and Linux
+
+```sh
+curl -fsSL https://wilfred93.github.io/chekin-cli/install.sh | sh
+chekin version
+```
+
+The script picks the release archive for your OS and CPU and checks it against the release's
+`checksums.txt`. Then it installs `chekin` into `~/.local/bin`. If that directory isn't on your `PATH`, the
+script prints the line to add to your shell profile.
+
+If the docs site is down, the same script is at
+`https://raw.githubusercontent.com/wilfred93/chekin-cli/master/docs/public/install.sh`.
+
+| Variable | Effect |
+| --- | --- |
+| `CHEKIN_INSTALL_DIR=/usr/local/bin` | Install somewhere else |
+| `CHEKIN_VERSION=v0.1.0` | Install a specific release instead of the latest |
+
+```sh
+curl -fsSL https://wilfred93.github.io/chekin-cli/install.sh | CHEKIN_VERSION=v0.1.0 sh
+```
+
+## Windows
+
+Download `chekin_windows_amd64.zip` (or `chekin_windows_arm64.zip`) from the
+[releases page](https://github.com/wilfred93/chekin-cli/releases). Unzip it and put `chekin.exe` in a folder
+on your `PATH`.
+
+## With Go
+
+You need [Go](https://go.dev/dl/) 1.26 or newer.
 
 ```sh
 go install github.com/wilfred93/chekin-cli/cmd/chekin@latest
@@ -19,27 +50,12 @@ directory to your `PATH`:
 export PATH="$PATH:$(go env GOPATH)/bin"
 ```
 
-## Build from source
+To build from a checkout instead:
 
 ```sh
 git clone https://github.com/wilfred93/chekin-cli.git
 cd chekin-cli
 go build -o bin/chekin ./cmd/chekin
-./bin/chekin help
-```
-
-To stamp a version into the binary, set it at build time:
-
-```sh
-go build -ldflags "-X github.com/wilfred93/chekin-cli/internal/cli.Version=v0.1.0" -o bin/chekin ./cmd/chekin
-```
-
-## Update
-
-Run the same `go install` command again. `@latest` fetches the newest version.
-
-```sh
-go install github.com/wilfred93/chekin-cli/cmd/chekin@latest
 ```
 
 ## Check the version
@@ -49,18 +65,50 @@ chekin version
 ```
 
 ```text
-chekin dev
+chekin v0.1.0
 ```
 
-Builds that don't set a version at build time, including `go install` and plain `go build`, print `dev`.
+Releases and `go install ...@version` copies print their version. A build from a checkout prints the Go
+pseudo-version of its commit (for example `v0.1.1-0.20261104085500-c210519abcde+dirty`), or `dev` when Go
+couldn't read it.
+
+## Update
+
+```sh
+chekin update --check   # only report whether a newer release exists
+chekin update           # download, verify and replace; asks first
+chekin update --yes     # don't ask (needed when not run from a terminal)
+```
+
+`chekin update` downloads the archive for your platform and checks its SHA-256 against the release's
+`checksums.txt` before touching anything. Then it replaces the binary with a rename, so a failed update leaves
+the old one in place. If the binary is in a directory you can't write to (for example `/usr/local/bin`), run
+it with `sudo`.
+
+- A copy installed with `go install` isn't replaced. `chekin update` prints the `go install` command to run instead.
+- A build from a checkout is never replaced.
+- Pre-releases (tags like `v0.2.0-rc.1`) are skipped, by both `chekin update` and the install script.
+
+Running the install script again also updates to the latest release.
 
 ## Uninstall
 
-Delete the binary and your saved login:
+Delete your saved login, then the binary:
 
 ```sh
 chekin logout
-rm "$(go env GOPATH)/bin/chekin"
+rm ~/.local/bin/chekin            # or wherever you installed it: command -v chekin
+rm -r ~/.config/chekin            # anything else chekin saved
+```
+
+## Releasing (maintainers)
+
+Push a version tag. GitHub Actions runs the tests, builds the archives and `checksums.txt`, and publishes a
+GitHub release:
+
+```sh
+git tag v0.2.0 && git push origin v0.2.0
+scripts/build-release.sh v0.2.0   # the same build locally into dist/, nothing published
 ```
 
 Next: [log in](/chekin-cli/log-in/).
