@@ -28,6 +28,7 @@ var referenceCommands = []struct {
 	{"chekin whoami", []string{"whoami", "--help"}},
 	{"chekin bookings list", []string{"bookings", "list", "--help"}},
 	{"chekin bookings get", []string{"bookings", "get", "--help"}},
+	{"chekin update", []string{"update", "--help"}},
 	{"chekin version", nil},
 }
 
@@ -56,7 +57,7 @@ command name. ` + "`reservations`" + ` works anywhere ` + "`bookings`" + ` does.
 	for _, c := range referenceCommands {
 		b.WriteString("\n## `" + c.title + "`\n\n")
 		if c.args == nil {
-			b.WriteString("Prints `chekin` and the version. `--version` does the same. Builds that don't set a version at build time (including `go install` and `go build`) print `chekin dev`.\n")
+			b.WriteString("Prints `chekin` and the version. `--version` does the same. Release builds print their version, as does a copy installed with `go install ...@v1.2.3`. A build from a checkout prints the Go pseudo-version of its commit, or `dev`.\n")
 			continue
 		}
 		var out bytes.Buffer
