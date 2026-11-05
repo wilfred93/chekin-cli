@@ -148,3 +148,7 @@ text. After changing a command or flag, regenerate it (`go test` fails until you
 ```sh
 go test ./internal/cli -run TestCommandReference -update
 ```
+
+## License
+
+[MIT](LICENSE) © Alfredo Lázaro
