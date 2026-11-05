@@ -42,6 +42,13 @@ export default defineConfig({
             { slug: 'how-it-works' },
           ],
         },
+        {
+          label: 'Project',
+          items: [
+            { slug: 'faq' },
+            { slug: 'contributing' },
+          ],
+        },
       ],
     }),
   ],
