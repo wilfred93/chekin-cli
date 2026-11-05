@@ -1,0 +1,54 @@
+name: Bug report
+description: A command does something wrong or fails.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public. Remove your token and any guest data (names, emails,
+        phone numbers, addresses, booking IDs) before you submit. Replace them with
+        made-up values.
+
+        If a command started failing because Chekin's API changed, use the
+        "An endpoint changed" form instead.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `chekin version`.
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: macOS 26.1 (arm64)
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command
+      description: The exact command you ran.
+      render: sh
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: What happened
+      description: The error message or wrong output.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy
+      options:
+        - label: I removed my token and any guest data
+          required: true

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://wilfred93.github.io/chekin-cli/
+    about: Install, log in, commands and troubleshooting.
