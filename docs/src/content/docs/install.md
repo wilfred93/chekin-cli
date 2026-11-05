@@ -72,6 +72,9 @@ Releases and `go install ...@version` copies print their version. A build from a
 pseudo-version of its commit (for example `v0.1.1-0.20261104085500-c210519abcde+dirty`), or `dev` when Go
 couldn't read it.
 
+The changes in each version are listed in its notes on the
+[releases page](https://github.com/wilfred93/chekin-cli/releases).
+
 ## Update
 
 ```sh
@@ -101,14 +104,6 @@ rm ~/.local/bin/chekin            # or wherever you installed it: command -v che
 rm -r ~/.config/chekin            # anything else chekin saved
 ```
 
-## Releasing (maintainers)
-
-Push a version tag. GitHub Actions runs the tests, builds the archives and `checksums.txt`, and publishes a
-GitHub release:
-
-```sh
-git tag v0.2.0 && git push origin v0.2.0
-scripts/build-release.sh v0.2.0   # the same build locally into dist/, nothing published
-```
+Making a release is described in [Contributing](/chekin-cli/contributing/).
 
 Next: [log in](/chekin-cli/log-in/).

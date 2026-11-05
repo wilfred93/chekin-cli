@@ -63,9 +63,14 @@ You can also pass the token directly (`--token eyJ…`), but then it ends up in 
 
 ## Where the token is saved
 
-The token is saved to `~/.config/chekin/credentials.json`, readable only by you (mode `0600`), together
-with the email and API URL. If `XDG_CONFIG_HOME` is set, the file goes in `$XDG_CONFIG_HOME/chekin/` instead,
-and `CHEKIN_CONFIG_DIR` overrides both.
+The token is saved to `credentials.json`, readable only by you (mode `0600`), together with the email and
+API URL. The file is in the first of these directories that applies:
+
+1. `$CHEKIN_CONFIG_DIR`, when set
+2. `$XDG_CONFIG_HOME/chekin`, when `XDG_CONFIG_HOME` is set
+3. `~/.config/chekin`
+
+A token in `CHEKIN_TOKEN` is used instead of the saved one and is never saved.
 
 ## How long it lasts
 
