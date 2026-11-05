@@ -24,12 +24,12 @@ for target in darwin/amd64 darwin/arm64 linux/amd64 linux/arm64 windows/amd64 wi
 	CGO_ENABLED=0 GOOS=$goos GOARCH=$goarch go build -trimpath \
 		-ldflags "-s -w -X github.com/wilfred93/chekin-cli/internal/cli.Version=$version" \
 		-o "$work/$bin" ./cmd/chekin
-	cp README.md "$work/"
+	cp README.md LICENSE "$work/"
 
 	if [ "$goos" = windows ]; then
-		(cd "$work" && zip -q "../$name.zip" "$bin" README.md)
+		(cd "$work" && zip -q "../$name.zip" "$bin" README.md LICENSE)
 	else
-		tar -czf "dist/$name.tar.gz" -C "$work" "$bin" README.md
+		tar -czf "dist/$name.tar.gz" -C "$work" "$bin" README.md LICENSE
 	fi
 	rm -rf "$work"
 done
