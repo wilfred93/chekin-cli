@@ -128,6 +128,8 @@ dashboard does.
 
 ## Develop
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, adding an endpoint, and the release process.
+
 ```sh
 go test ./...
 ```
